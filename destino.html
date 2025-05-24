@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mensagem Animada Gamer</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffea;
+      text-shadow:
+        0 0 5px #00ffe7,
+        0 0 10px #00ffe7,
+        0 0 20px #00ffe7,
+        0 0 40px #0ff,
+        0 0 80px #0ff;
+      user-select: none;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #mensagem {
+      font-size: 3rem;
+      white-space: nowrap;
+      border-right: 3px solid #00ffe7;
+      padding-right: 5px;
+      /* para o cursor piscar */
+      animation: blinkCursor 1s step-end infinite;
+    }
+
+    @keyframes blinkCursor {
+      from, to {
+        border-color: transparent;
+      }
+      50% {
+        border-color: #00ffe7;
+      }
+    }
+
+    /* Confetes neon */
+    .confete {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #00ffe7;
+      box-shadow:
+        0 0 5px #00ffe7,
+        0 0 10px #00ffe7,
+        0 0 15px #00ffe7;
+      animation: cair 3s linear infinite;
+      opacity: 0.9;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes cair {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="mensagem"></div>
+
+  <script>
+    const texto = "Parabéns, você é um homem de verdade! 💪";
+    const mensagemEl = document.getElementById('mensagem');
+    let i = 0;
+
+    function digitar() {
+      if (i < texto.length) {
+        mensagemEl.textContent += texto.charAt(i);
+        i++;
+        setTimeout(digitar, 100);
+      } else {
+        // termina o efeito do cursor piscando
+        mensagemEl.style.borderRight = 'none';
+      }
+    }
+
+    digitar();
+
+    // Criar confetes neon
+    for (let j = 0; j < 60; j++) {
+      const confete = document.createElement('div');
+      confete.classList.add('confete');
+      confete.style.left = `${Math.random() * 100}vw`;
+      confete.style.top = `${-Math.random() * 100}px`;
+      confete.style.animationDuration = `${2 + Math.random() * 3}s`;
+      confete.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+      confete.style.boxShadow = `
+        0 0 5px hsl(${Math.random() * 360}, 100%, 70%),
+        0 0 10px hsl(${Math.random() * 360}, 100%, 70%),
+        0 0 20px hsl(${Math.random() * 360}, 100%, 70%)
+      `;
+      document.body.appendChild(confete);
+    }
+  </script>
+</body>
+</html>
